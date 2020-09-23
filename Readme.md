@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Елена Ордина](https://up.htmlacademy.ru/javascript/21/user/512899).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Александрович](https://htmlacademy.ru/profile/id1378855).
 
 ---
 
