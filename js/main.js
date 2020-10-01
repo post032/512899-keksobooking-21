@@ -39,7 +39,7 @@ for (let i = 0; i < 8; i++) {
     },
     offer: {
       title: `Заголовок${i + 1}`,
-      address: toString(locationPoint),
+      address: `${locationPoint.x}, ${locationPoint.y}`,
       price: getRandomInt(100, 6000),
       type: getRandomElement(TYPE_ARR),
       rooms: getRandomInt(1, 4),
@@ -54,6 +54,9 @@ for (let i = 0; i < 8; i++) {
   };
   newAds.push(newObjectAd);
 }
+
+console.log(newAds);
+
 
 let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 let markElements = document.querySelector(`.map__pins`);
