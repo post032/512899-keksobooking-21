@@ -55,7 +55,7 @@ for (let i = 0; i < 8; i++) {
   newAds.push(newObjectAd);
 }
 
-console.log(newAds);
+
 
 
 let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
