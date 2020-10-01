@@ -39,7 +39,7 @@ for (let i = 0; i < 8; i++) {
     },
     offer: {
       title: `Заголовок${i + 1}`,
-      address: locationPoint,
+      address: toString(locationPoint),
       price: getRandomInt(100, 6000),
       type: getRandomElement(TYPE_ARR),
       rooms: getRandomInt(1, 4),
