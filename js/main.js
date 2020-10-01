@@ -56,8 +56,6 @@ for (let i = 0; i < 8; i++) {
 }
 
 
-
-
 let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 let markElements = document.querySelector(`.map__pins`);
 
