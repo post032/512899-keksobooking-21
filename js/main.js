@@ -56,12 +56,12 @@ for (let i = 0; i < 8; i++) {
 }
 
 let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-let markElements = document.querySelector(`.map`);
+let markElements = document.querySelector(`.map__pins`);
 
 let renderMark = function (newAd) {
   let markElement = markElementTemplate.cloneNode(true);
-  markElement.style.left = newAd.location.x + 32 + `px`;
-  markElement.style.top = newAd.location.y + 64 + `px`;
+  markElement.style.left = newAd.location.x + 25 + `px`;
+  markElement.style.top = newAd.location.y + 70 + `px`;
   let avatarImg = markElement.querySelector(`img`);
   avatarImg.src = newAd.author.avatar;
   avatarImg.alt = `фото пользователя`;
