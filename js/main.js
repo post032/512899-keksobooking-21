@@ -55,9 +55,10 @@ for (let i = 0; i < 8; i++) {
   newAds.push(newObjectAd);
 }
 
-
 let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+let cardElementTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 let markElements = document.querySelector(`.map__pins`);
+let cardElements = document.querySelector(`.map`);
 
 let renderMark = function (newAd) {
   let markElement = markElementTemplate.cloneNode(true);
@@ -69,9 +70,40 @@ let renderMark = function (newAd) {
   return markElement;
 };
 
+let engToRuMap = {
+  flat: `бунгало`,
+  bungalow: `Бунгало`,
+  house: `Дом`,
+  palace: `Дворец`
+};
+
+let renderCard = function (newAd) {
+  let cardElement = cardElementTemplate.cloneNode(true);
+  cardElement.querySelector(`.popup__title`).textContent = newAd.offer.title;
+  cardElement.querySelector(`.popup__text--address`).textContent = newAd.offer.address;
+  cardElement.querySelector(`.popup__text--price`).textContent = `${newAd.offer.price}₽/ночь`;
+  cardElement.querySelector(`.popup__type`).textContent = engToRuMap[newAd.offer.type];
+  cardElement.querySelector(`.popup__text--capacity`).textContent = `${newAd.offer.rooms} комнаты для ${newAd.offer.guests} гостей`;
+  cardElement.querySelector(`.popup__text--time`).textContent = `Заезд после ${newAd.offer.checkin}, выезд до ${newAd.offer.checkout}`;
+  cardElement.querySelector(`.popup__features`).textContent = newAd.offer.features;
+  cardElement.querySelector(`.popup__description`).textContent = newAd.offer.description;
+  let blockImg = cardElement.querySelector(`.popup__photos`);
+  let image = blockImg.querySelector(`img`);
+  image.remove();
+  for (let i = 0; i < newAd.offer.photos.length; i++) {
+    let cloneImg = image.cloneNode(true);
+    cloneImg.src = newAd.offer.photos[i];
+    blockImg.appendChild(cloneImg);
+  }
+  cardElement.querySelector(`.popup__avatar`).src = newAd.author.avatar;
+  return cardElement;
+};
+
 let fragment = document.createDocumentFragment();
 for (let i = 0; i < newAds.length; i++) {
   fragment.appendChild(renderMark(newAds[i]));
+  fragment.appendChild(renderCard(newAds[i]));
 }
 
 markElements.appendChild(fragment);
+cardElements.appendChild(fragment);
