@@ -87,19 +87,12 @@ let renderCard = function (newAd) {
   cardElementItem.querySelector(`.popup__text--capacity`).textContent = `${newAd.offer.rooms} комнаты для ${newAd.offer.guests} гостей`;
   cardElementItem.querySelector(`.popup__text--time`).textContent = `Заезд после ${newAd.offer.checkin}, выезд до ${newAd.offer.checkout}`;
   let popupFeaturesBlock = cardElementItem.querySelector(`.popup__features`);
-  let popupFeatures = popupFeaturesBlock.querySelectorAll(`.popup__feature`);
-
-  if (popupFeatures.length > newAd.offer.features.length) {
-    for (let i = newAd.offer.features.length; i < popupFeatures.length; i++) {
-      let child = popupFeatures[i];
-      child.parentElement.removeChild(child);
-    }
-  }
-
+  popupFeaturesBlock.innerHTML = ``;
   for (let i = 0; i < newAd.offer.features.length; i++) {
-    popupFeatures[i].classList.remove(`popup__feature--${FEATURES_ARR[i]}`);
-    popupFeatures[i].textContent = newAd.offer.features[i];
-    popupFeatures[i].classList.add(`popup__feature--${newAd.offer.features[i]}`);
+    let popupFeatureElement = document.createElement(`li`);
+    popupFeatureElement.textContent = newAd.offer.features[i];
+    popupFeatureElement.classList.add(`popup__feature`, `popup__feature--${newAd.offer.features[i]}`);
+    popupFeaturesBlock.append(popupFeatureElement);
   }
 
   if (!popupFeaturesBlock.querySelector(`.popup__feature`)) {
