@@ -184,38 +184,38 @@ const MAX_PRICE = 1000000;
 
 let price = MAIN.querySelector(`#price`);
 
-price.addEventListener(`input`, function (evt) {
+price.addEventListener(`change`, function (evt) {
   evt.preventDefault();
   if (price > MAX_PRICE) {
-    price.setCustomValidity(`Цена не может превышать сумму ${MAX_PRICE}рублей/ночь.`);
+    price.setCustomValidity(`Цена не может превышать сумму ${MAX_PRICE} рублей/ночь.`);
   } else {
-    titleAdd.setCustomValidity(``);
+    price.setCustomValidity(``);
   }
   price.reportValidity();
 });
 
 
-let roomNumber = MAIN.querySelector(`#room_number`);
-let capacity = MAIN.querySelector(`#capacity`);
-console.log(roomNumber);
-console.log(capacity);
+// let roomNumber = MAIN.querySelector(`#room_number`);
+// let capacity = MAIN.querySelector(`#capacity`);
+// console.log(roomNumber);
+// console.log(capacity);
 
-let validationRooms = function () {
-  let a = roomNumber.value;
-  let b = capacity.value;
-  if (a === 100) {
-    capacity.setCustomValidity(`Дворец не для гостей`);
-  } else if (a < b && a !== 100) {
-    capacity.setCustomValidity(`Число гостей не может превышать ${a}`);
-  } else if (a >= b && a !== 100) {
-    capacity.setCustomValidity(``);
-  }
-};
+// let validationRooms = function () {
+//   let a = roomNumber.value;
+//   let b = capacity.value;
+//   if (a === 100) {
+//     capacity.setCustomValidity(`Дворец не для гостей`);
+//   } else if (a < b && a !== 100) {
+//     capacity.setCustomValidity(`Число гостей не может превышать ${a}`);
+//   } else if (a >= b && a !== 100) {
+//     capacity.setCustomValidity(``);
+//   }
+// };
 
-roomNumber.addEventListener(`form`, function () {
-  validationRooms();
-});
+// roomNumber.addEventListener(`change`, function () {
+//   validationRooms();
+// });
 
-capacity.addEventListener(`form`, function () {
-  validationRooms();
-});
+// capacity.addEventListener(`change`, function () {
+//   validationRooms();
+// });
