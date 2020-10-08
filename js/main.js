@@ -184,9 +184,9 @@ const MAX_PRICE = 1000000;
 
 let price = MAIN.querySelector(`#price`);
 
-price.addEventListener(`change`, function (evt) {
-  evt.preventDefault();
-  if (price > MAX_PRICE) {
+price.addEventListener(`input`, function (e) {
+  e.preventDefault();
+  if (price.value > MAX_PRICE) {
     price.setCustomValidity(`Цена не может превышать сумму ${MAX_PRICE} рублей/ночь.`);
   } else {
     price.setCustomValidity(``);
@@ -195,27 +195,33 @@ price.addEventListener(`change`, function (evt) {
 });
 
 
-// let roomNumber = MAIN.querySelector(`#room_number`);
-// let capacity = MAIN.querySelector(`#capacity`);
-// console.log(roomNumber);
-// console.log(capacity);
+let roomNumber = MAIN.querySelector(`#room_number`);
+let capacity = MAIN.querySelector(`#capacity`);
 
-// let validationRooms = function () {
-//   let a = roomNumber.value;
-//   let b = capacity.value;
-//   if (a === 100) {
-//     capacity.setCustomValidity(`Дворец не для гостей`);
-//   } else if (a < b && a !== 100) {
-//     capacity.setCustomValidity(`Число гостей не может превышать ${a}`);
-//   } else if (a >= b && a !== 100) {
-//     capacity.setCustomValidity(``);
-//   }
-// };
+let validationRooms = function () {
+  let a = roomNumber.value;
+  let b = capacity.value;
+  if (a === `100` && b !== `0`) {
+    roomNumber.setCustomValidity(`Дворец не для гостей`);
+    capacity.setCustomValidity(`Дворец не для гостей`);
+  } else if (a < b && a !== `100`) {
+    roomNumber.setCustomValidity(`Количество гостей не может превышать ${a}`);
+    capacity.setCustomValidity(`Количество гостей не может превышать ${a}`);
+  } else if (a >= b && a !== `100` && b === `0`) {
+    roomNumber.setCustomValidity(`Выберите количество гостей`);
+    capacity.setCustomValidity(`Выберите количество гостей`);
+  } else if (a >= b && a !== `100`) {
+    roomNumber.setCustomValidity(``);
+    capacity.setCustomValidity(``);
+  }
+};
 
-// roomNumber.addEventListener(`change`, function () {
-//   validationRooms();
-// });
+roomNumber.addEventListener(`change`, function () {
+  validationRooms();
+  roomNumber.reportValidity();
+});
 
-// capacity.addEventListener(`change`, function () {
-//   validationRooms();
-// });
+capacity.addEventListener(`change`, function () {
+  validationRooms();
+  capacity.reportValidity();
+});
