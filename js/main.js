@@ -5,6 +5,10 @@ const CHECKIN_ARR = [`12:00`, `13:00`, `14:00`];
 const FEATURES_ARR = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 const TYPE_ARR = [`palace`, `flat`, `house`, `bungalow`];
 const PHOTOS_ARR = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
+const MIN_NAME_LENGTH = 30;
+const MAX_NAME_LENGTH = 100;
+const MAX_PRICE = 1000000;
+const MAIN = document.querySelector(`main`);
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -118,7 +122,6 @@ for (let i = 0; i < newAds.length; i++) {
 
 // fragment.appendChild(renderCard(newAds[0]));
 
-const MAIN = document.querySelector(`main`);
 let adForm = MAIN.querySelector(`.ad-form`);
 let map = MAIN.querySelector(`.map`);
 
@@ -128,7 +131,7 @@ for (let fieldsetElement of fieldsetElements) {
   fieldsetElement.setAttribute(`disabled`, true);
 }
 
-let onOpenPage = document.querySelector(`.map__pin--main`);
+let openPinPage = document.querySelector(`.map__pin--main`);
 
 let openPage = function () {
   map.classList.remove(`map--faded`);
@@ -138,14 +141,14 @@ let openPage = function () {
   }
 };
 
-onOpenPage.addEventListener(`mousedown`, function (e) {
+openPinPage.addEventListener(`mousedown`, function (e) {
   if (e.button === 0) {
     openPage();
     markElement.appendChild(fragment);
   }
 });
 
-onOpenPage.addEventListener(`keydown`, function (evt) {
+openPinPage.addEventListener(`keydown`, function (evt) {
   if (evt.key === `Enter`) {
     evt.preventDefault();
     openPage();
@@ -154,16 +157,13 @@ onOpenPage.addEventListener(`keydown`, function (evt) {
 });
 
 let locationStart = {
-  x: onOpenPage.style.left = 570 - 32,
-  y: onOpenPage.style.top = 375 - 65,
+  x: openPinPage.style.left = 570 - 32,
+  y: openPinPage.style.top = 375 - 65,
 };
 
 let address = document.querySelector(`#address`);
+address.setAttribute(`disabled`, true);
 address.value = `${locationStart.x}, ${locationStart.y}`;
-
-
-const MIN_NAME_LENGTH = 30;
-const MAX_NAME_LENGTH = 100;
 
 let titleAdd = MAIN.querySelector(`#title`);
 
@@ -179,8 +179,6 @@ titleAdd.addEventListener(`input`, function () {
 
   titleAdd.reportValidity();
 });
-
-const MAX_PRICE = 1000000;
 
 let price = MAIN.querySelector(`#price`);
 
@@ -198,30 +196,57 @@ price.addEventListener(`input`, function (e) {
 let roomNumber = MAIN.querySelector(`#room_number`);
 let capacity = MAIN.querySelector(`#capacity`);
 
-let validationRooms = function () {
-  let a = roomNumber.value;
-  let b = capacity.value;
-  if (a === `100` && b !== `0`) {
+let getValidationRooms = function () {
+  let valueRooms = roomNumber.value;
+  let valueCapacity = capacity.value;
+  if (valueRooms === `100` && valueCapacity !== `0`) {
     roomNumber.setCustomValidity(`Дворец не для гостей`);
     capacity.setCustomValidity(`Дворец не для гостей`);
-  } else if (a < b && a !== `100`) {
-    roomNumber.setCustomValidity(`Количество гостей не может превышать ${a}`);
-    capacity.setCustomValidity(`Количество гостей не может превышать ${a}`);
-  } else if (a >= b && a !== `100` && b === `0`) {
+  } else if (valueRooms === `100` && valueCapacity === `0`) {
+    roomNumber.setCustomValidity(``);
+    capacity.setCustomValidity(``);
+  } else if (valueRooms < valueCapacity && valueRooms !== `100`) {
+    roomNumber.setCustomValidity(`Количество гостей не может превышать ${valueRooms}`);
+    capacity.setCustomValidity(`Количество гостей не может превышать ${valueRooms}`);
+  } else if (valueRooms >= valueCapacity && valueRooms !== `100` && valueCapacity === `0`) {
     roomNumber.setCustomValidity(`Выберите количество гостей`);
     capacity.setCustomValidity(`Выберите количество гостей`);
-  } else if (a >= b && a !== `100`) {
+  } else if (valueRooms >= valueCapacity && valueRooms !== `100`) {
     roomNumber.setCustomValidity(``);
     capacity.setCustomValidity(``);
   }
 };
 
 roomNumber.addEventListener(`change`, function () {
-  validationRooms();
+  getValidationRooms();
   roomNumber.reportValidity();
 });
 
 capacity.addEventListener(`change`, function () {
-  validationRooms();
+  getValidationRooms();
   capacity.reportValidity();
+});
+
+let timeIn = MAIN.querySelector(`#timein`);
+let timeOut = MAIN.querySelector(`#timeout`);
+
+let getCompareTime = function () {
+  let valueTimeIn = timeIn.value;
+  let valueTimeOut = timeOut.value;
+  if (valueTimeIn !== valueTimeOut) {
+    timeIn.setCustomValidity(`Время заезды и выезда должно совпадать`);
+    timeOut.setCustomValidity(`Время заезды и выезда должно совпадать`);
+  } else {
+    timeIn.setCustomValidity(``);
+    timeOut.setCustomValidity(``);
+  }
+};
+
+timeIn.addEventListener(`change`, function () {
+  getCompareTime();
+  timeIn.reportValidity();
+});
+timeOut.addEventListener(`change`, function () {
+  getCompareTime();
+  timeOut.reportValidity();
 });
