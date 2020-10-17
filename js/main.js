@@ -156,15 +156,34 @@ openPinPage.addEventListener(`keydown`, function (evt) {
 let mapPins = MAIN.querySelector(`.map__pins`);
 let onMapPin = function (evt) {
   let pin = evt.target.closest(`.map__pin:not(.map__pin--main)`);
-
   if (!pin) {
     return;
   } else {
     let pins = Array.from(MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
     let item = pins.indexOf(evt.target.closest(`.map__pin`));
+    if (MAIN.querySelector(`.map__card`)) {
+      MAIN.querySelector(`.map__card`).remove();
+    }
     map.appendChild(renderCard(newAds[item]));
   }
+  let popupClose = MAIN.querySelector(`.popup__close`);
+  let mapCard = MAIN.querySelector(`.map__card`);
+  let closePopup = function () {
+    mapCard.remove();
+  };
+  let onPopupEscPress = function (e) {
+    if (e.key === `Escape`) {
+      e.preventDefault();
+      closePopup();
+    }
+  };
+  document.addEventListener(`keydown`, onPopupEscPress);
+  popupClose.addEventListener(`click`, function () {
+    closePopup();
+    document.removeEventListener(`keydown`, onPopupEscPress);
+  });
 };
+
 mapPins.addEventListener(`click`, onMapPin);
 
 let locationStart = {
