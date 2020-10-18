@@ -128,7 +128,7 @@ let fieldsetElements = MAIN.querySelectorAll(`fieldset`);
 for (let fieldsetElement of fieldsetElements) {
   fieldsetElement.setAttribute(`disabled`, true);
 }
-
+let pins = [];
 let openPinPage = document.querySelector(`.map__pin--main`);
 let openPage = function () {
   map.classList.remove(`map--faded`);
@@ -142,6 +142,7 @@ openPinPage.addEventListener(`mousedown`, function (e) {
   if (e.button === 0) {
     openPage();
     markElement.appendChild(fragment);
+    pins = Array.from(MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   }
 });
 
@@ -150,33 +151,37 @@ openPinPage.addEventListener(`keydown`, function (evt) {
     evt.preventDefault();
     openPage();
     markElement.appendChild(fragment);
+    pins = Array.from(MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   }
 });
+
+let onPopupEscPress = function (e) {
+  let card = MAIN.querySelector(`.map__card`);
+  if (e.key === `Escape`) {
+    e.preventDefault();
+    card.remove();
+    document.removeEventListener(`keydown`, onPopupEscPress);
+  }
+};
 
 let mapPins = MAIN.querySelector(`.map__pins`);
 let onMapPin = function (evt) {
   let pin = evt.target.closest(`.map__pin:not(.map__pin--main)`);
   if (!pin) {
     return;
-  } else {
-    let pins = Array.from(MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
-    let item = pins.indexOf(evt.target.closest(`.map__pin`));
-    if (MAIN.querySelector(`.map__card`)) {
-      MAIN.querySelector(`.map__card`).remove();
-    }
-    map.appendChild(renderCard(newAds[item]));
   }
-  let popupClose = MAIN.querySelector(`.popup__close`);
+  let card = MAIN.querySelector(`.map__card`);
+  let item = pins.indexOf(evt.target.closest(`.map__pin`));
+  if (card) {
+    card.remove();
+    document.removeEventListener(`keydown`, onPopupEscPress);
+  }
+  map.appendChild(renderCard(newAds[item]));
   let mapCard = MAIN.querySelector(`.map__card`);
   let closePopup = function () {
     mapCard.remove();
   };
-  let onPopupEscPress = function (e) {
-    if (e.key === `Escape`) {
-      e.preventDefault();
-      closePopup();
-    }
-  };
+  let popupClose = MAIN.querySelector(`.popup__close`);
   document.addEventListener(`keydown`, onPopupEscPress);
   popupClose.addEventListener(`click`, function () {
     closePopup();
@@ -270,20 +275,29 @@ timeOut.addEventListener(`change`, function () {
 let roomType = MAIN.querySelector(`#type`);
 
 let getMinValuePrice = function () {
+  let priceValue = price.value;
   if (roomType.value === `bungalow`) {
-    price.value = 0;
+    price.placeholder = 0;
   }
-  if (roomType.value === `flat`) {
-    price.value = 1000;
+  if (roomType.value === `flat` && priceValue < 1000) {
+    price.placeholder = 1000;
+    price.setCustomValidity(`Для квартиры минимальная стоимость составляет 1000 рублей`);
   }
-  if (roomType.value === `house`) {
-    price.value = 5000;
+  if (roomType.value === `house` && priceValue < 5000) {
+    price.placeholder = 5000;
+    price.setCustomValidity(`Для дома минимальная стоимость составляет 5000 рублей`);
   }
-  if (roomType.value === `palace`) {
-    price.value = 10000;
+  if (roomType.value === `palace` && priceValue < 10000) {
+    price.placeholder = 10000;
+    price.setCustomValidity(`Для дворца минимальная стоимость составляет 10000 рублей`);
   }
 };
 
 roomType.addEventListener(`input`, function () {
   getMinValuePrice();
+});
+
+price.addEventListener(`input`, function () {
+  getMinValuePrice();
+  price.reportValidity();
 });
