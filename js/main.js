@@ -61,7 +61,7 @@ for (let i = 0; i < 8; i++) {
 }
 
 let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-// let cardElementTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
+let cardElementTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 let markElement = document.querySelector(`.map__pins`);
 
 let renderMark = function (newAd) {
@@ -74,53 +74,51 @@ let renderMark = function (newAd) {
   return markElementItem;
 };
 
-// let engToRuMap = {
-//   flat: `Квартира`,
-//   bungalow: `Бунгало`,
-//   house: `Дом`,
-//   palace: `Дворец`
-// };
+let engToRuMap = {
+  flat: `Квартира`,
+  bungalow: `Бунгало`,
+  house: `Дом`,
+  palace: `Дворец`
+};
 
-// let renderCard = function (newAd) {
-//   let cardElementItem = cardElementTemplate.cloneNode(true);
-//   cardElementItem.querySelector(`.popup__title`).textContent = newAd.offer.title;
-//   cardElementItem.querySelector(`.popup__text--address`).textContent = newAd.offer.address;
-//   cardElementItem.querySelector(`.popup__text--price`).textContent = `${newAd.offer.price}₽/ночь`;
-//   cardElementItem.querySelector(`.popup__type`).textContent = engToRuMap[newAd.offer.type];
-//   cardElementItem.querySelector(`.popup__text--capacity`).textContent = `${newAd.offer.rooms} комнаты для ${newAd.offer.guests} гостей`;
-//   cardElementItem.querySelector(`.popup__text--time`).textContent = `Заезд после ${newAd.offer.checkin}, выезд до ${newAd.offer.checkout}`;
-//   let popupFeaturesBlock = cardElementItem.querySelector(`.popup__features`);
-//   popupFeaturesBlock.innerHTML = ``;
-//   for (let i = 0; i < newAd.offer.features.length; i++) {
-//     let popupFeatureElement = document.createElement(`li`);
-//     popupFeatureElement.textContent = newAd.offer.features[i];
-//     popupFeatureElement.classList.add(`popup__feature`, `popup__feature--${newAd.offer.features[i]}`);
-//     popupFeaturesBlock.append(popupFeatureElement);
-//   }
+let renderCard = function (newAd) {
+  let cardElementItem = cardElementTemplate.cloneNode(true);
+  cardElementItem.querySelector(`.popup__title`).textContent = newAd.offer.title;
+  cardElementItem.querySelector(`.popup__text--address`).textContent = newAd.offer.address;
+  cardElementItem.querySelector(`.popup__text--price`).textContent = `${newAd.offer.price}₽/ночь`;
+  cardElementItem.querySelector(`.popup__type`).textContent = engToRuMap[newAd.offer.type];
+  cardElementItem.querySelector(`.popup__text--capacity`).textContent = `${newAd.offer.rooms} комнаты для ${newAd.offer.guests} гостей`;
+  cardElementItem.querySelector(`.popup__text--time`).textContent = `Заезд после ${newAd.offer.checkin}, выезд до ${newAd.offer.checkout}`;
+  let popupFeaturesBlock = cardElementItem.querySelector(`.popup__features`);
+  popupFeaturesBlock.innerHTML = ``;
+  for (let i = 0; i < newAd.offer.features.length; i++) {
+    let popupFeatureElement = document.createElement(`li`);
+    popupFeatureElement.textContent = newAd.offer.features[i];
+    popupFeatureElement.classList.add(`popup__feature`, `popup__feature--${newAd.offer.features[i]}`);
+    popupFeaturesBlock.append(popupFeatureElement);
+  }
 
-//   if (!popupFeaturesBlock.querySelector(`.popup__feature`)) {
-//     popupFeaturesBlock.style.display = `none`;
-//   }
+  if (!popupFeaturesBlock.querySelector(`.popup__feature`)) {
+    popupFeaturesBlock.style.display = `none`;
+  }
 
-//   cardElementItem.querySelector(`.popup__description`).textContent = newAd.offer.description;
-//   let blockImg = cardElementItem.querySelector(`.popup__photos`);
-//   let image = blockImg.querySelector(`img`);
-//   image.remove();
-//   for (let i = 0; i < newAd.offer.photos.length; i++) {
-//     let cloneImg = image.cloneNode(true);
-//     cloneImg.src = newAd.offer.photos[i];
-//     blockImg.appendChild(cloneImg);
-//   }
-//   cardElementItem.querySelector(`.popup__avatar`).src = newAd.author.avatar;
-//   return cardElementItem;
-// };
+  cardElementItem.querySelector(`.popup__description`).textContent = newAd.offer.description;
+  let blockImg = cardElementItem.querySelector(`.popup__photos`);
+  let image = blockImg.querySelector(`img`);
+  image.remove();
+  for (let i = 0; i < newAd.offer.photos.length; i++) {
+    let cloneImg = image.cloneNode(true);
+    cloneImg.src = newAd.offer.photos[i];
+    blockImg.appendChild(cloneImg);
+  }
+  cardElementItem.querySelector(`.popup__avatar`).src = newAd.author.avatar;
+  return cardElementItem;
+};
 
 let fragment = document.createDocumentFragment();
 for (let i = 0; i < newAds.length; i++) {
   fragment.appendChild(renderMark(newAds[i]));
 }
-
-// fragment.appendChild(renderCard(newAds[0]));
 
 let adForm = MAIN.querySelector(`.ad-form`);
 let map = MAIN.querySelector(`.map`);
@@ -130,9 +128,8 @@ let fieldsetElements = MAIN.querySelectorAll(`fieldset`);
 for (let fieldsetElement of fieldsetElements) {
   fieldsetElement.setAttribute(`disabled`, true);
 }
-
+let pins = [];
 let openPinPage = document.querySelector(`.map__pin--main`);
-
 let openPage = function () {
   map.classList.remove(`map--faded`);
   adForm.classList.remove(`ad-form--disabled`);
@@ -145,6 +142,7 @@ openPinPage.addEventListener(`mousedown`, function (e) {
   if (e.button === 0) {
     openPage();
     markElement.appendChild(fragment);
+    pins = Array.from(MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   }
 });
 
@@ -153,8 +151,45 @@ openPinPage.addEventListener(`keydown`, function (evt) {
     evt.preventDefault();
     openPage();
     markElement.appendChild(fragment);
+    pins = Array.from(MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   }
 });
+
+let onPopupEscPress = function (e) {
+  let card = MAIN.querySelector(`.map__card`);
+  if (e.key === `Escape`) {
+    e.preventDefault();
+    card.remove();
+    document.removeEventListener(`keydown`, onPopupEscPress);
+  }
+};
+
+let mapPins = MAIN.querySelector(`.map__pins`);
+let onMapPin = function (evt) {
+  let pin = evt.target.closest(`.map__pin:not(.map__pin--main)`);
+  if (!pin) {
+    return;
+  }
+  let card = MAIN.querySelector(`.map__card`);
+  let item = pins.indexOf(evt.target.closest(`.map__pin`));
+  if (card) {
+    card.remove();
+    document.removeEventListener(`keydown`, onPopupEscPress);
+  }
+  map.appendChild(renderCard(newAds[item]));
+  let mapCard = MAIN.querySelector(`.map__card`);
+  let closePopup = function () {
+    mapCard.remove();
+  };
+  let popupClose = MAIN.querySelector(`.popup__close`);
+  document.addEventListener(`keydown`, onPopupEscPress);
+  popupClose.addEventListener(`click`, function () {
+    closePopup();
+    document.removeEventListener(`keydown`, onPopupEscPress);
+  });
+};
+
+mapPins.addEventListener(`click`, onMapPin);
 
 let locationStart = {
   x: openPinPage.style.left = 570 - 32,
@@ -230,23 +265,39 @@ capacity.addEventListener(`change`, function () {
 let timeIn = MAIN.querySelector(`#timein`);
 let timeOut = MAIN.querySelector(`#timeout`);
 
-let getCompareTime = function () {
-  let valueTimeIn = timeIn.value;
-  let valueTimeOut = timeOut.value;
-  if (valueTimeIn !== valueTimeOut) {
-    timeIn.setCustomValidity(`Время заезды и выезда должно совпадать`);
-    timeOut.setCustomValidity(`Время заезды и выезда должно совпадать`);
-  } else {
-    timeIn.setCustomValidity(``);
-    timeOut.setCustomValidity(``);
+timeIn.addEventListener(`change`, function () {
+  timeOut.value = timeIn.value;
+});
+timeOut.addEventListener(`change`, function () {
+  timeIn.value = timeOut.value;
+});
+
+let roomType = MAIN.querySelector(`#type`);
+
+let getMinValuePrice = function () {
+  let priceValue = price.value;
+  if (roomType.value === `bungalow`) {
+    price.placeholder = 0;
+  }
+  if (roomType.value === `flat` && priceValue < 1000) {
+    price.placeholder = 1000;
+    price.setCustomValidity(`Для квартиры минимальная стоимость составляет 1000 рублей`);
+  }
+  if (roomType.value === `house` && priceValue < 5000) {
+    price.placeholder = 5000;
+    price.setCustomValidity(`Для дома минимальная стоимость составляет 5000 рублей`);
+  }
+  if (roomType.value === `palace` && priceValue < 10000) {
+    price.placeholder = 10000;
+    price.setCustomValidity(`Для дворца минимальная стоимость составляет 10000 рублей`);
   }
 };
 
-timeIn.addEventListener(`change`, function () {
-  getCompareTime();
-  timeIn.reportValidity();
+roomType.addEventListener(`input`, function () {
+  getMinValuePrice();
 });
-timeOut.addEventListener(`change`, function () {
-  getCompareTime();
-  timeOut.reportValidity();
+
+price.addEventListener(`input`, function () {
+  getMinValuePrice();
+  price.reportValidity();
 });
