@@ -16,13 +16,13 @@
       return;
     }
     let card = window.main.MAIN.querySelector(`.map__card`);
-    let item = window.pin.pins.indexOf(evt.target.closest(`.map__pin`));
+    let item = window.maps.pins.indexOf(evt.target.closest(`.map__pin`));
 
     if (card) {
       card.remove();
       document.removeEventListener(`keydown`, onPopupEscPress);
     }
-    window.pin.map.appendChild(window.data.renderCard(window.data.newAds[item]));
+    window.maps.map.appendChild(window.pinCard.renderCard(window.data.newAds[item]));
     let mapCard = window.main.MAIN.querySelector(`.map__card`);
     let closePopup = function () {
       mapCard.remove();

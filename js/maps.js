@@ -17,8 +17,8 @@
     for (let fieldsetElement of fieldsetElements) {
       fieldsetElement.removeAttribute(`disabled`);
     }
-    window.data.markElement.appendChild(window.data.fragment);
-    window.pin.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
+    window.pinCard.markElement.appendChild(window.pinCard.fragment);
+    window.maps.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   };
 
   openPinPage.addEventListener(`click`, function (e) {
@@ -33,7 +33,7 @@
       openPage();
     }
   });
-  window.pin = {
+  window.maps = {
     pins,
     openPinPage,
     map
