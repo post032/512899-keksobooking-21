@@ -111,4 +111,8 @@
     getMinValuePrice();
     price.reportValidity();
   });
+
+  window.form = {
+    address,
+  };
 })();
