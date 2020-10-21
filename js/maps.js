@@ -21,7 +21,7 @@
     window.maps.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   };
 
-  openPinPage.addEventListener(`click`, function (e) {
+  openPinPage.addEventListener(`mousedown`, function (e) {
     if (e.button === 0) {
       openPage();
     }
