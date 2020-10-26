@@ -46,14 +46,23 @@
     cardElementItem.querySelector(`.popup__avatar`).src = newAd.author.avatar;
     return cardElementItem;
   };
-  let fragment = document.createDocumentFragment();
-  for (let i = 0; i < window.data.newAds.length; i++) {
-    fragment.appendChild(renderMark(window.data.newAds[i]));
-  }
+  let pins = [];
+  let pinsElements = [];
+  let onSuccess = function (pinsElem) {
+    let fragment = document.createDocumentFragment();
+    for (let i = 0; i < pinsElem.length; i++) {
+      fragment.appendChild(renderMark(pinsElem[i]));
+    }
+    window.pinCard.pinsElements = Array.from(pinsElem);
+    markElement.appendChild(fragment);
+    window.pinCard.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
+  };
 
   window.pinCard = {
     markElement,
     renderCard,
-    fragment,
+    onSuccess,
+    pinsElements,
+    pins
   };
 })();
