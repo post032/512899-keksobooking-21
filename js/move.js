@@ -26,15 +26,15 @@
       };
 
       let locationAddress = {
-        x: `${window.maps.openPinPage.offsetLeft - shift.x}` - 32,
-        y: `${window.maps.openPinPage.offsetTop - shift.y}` - 65
+        x: window.maps.openPinPage.offsetLeft - shift.x - 32,
+        y: window.maps.openPinPage.offsetTop - shift.y - 65
       };
       window.form.address.value = `${locationAddress.x}, ${locationAddress.y}`;
 
-      if (`${locationAddress.y}` < 630 && `${locationAddress.y}` > 129) {
+      if (locationAddress.y < 630 && locationAddress.y > 129) {
         window.maps.openPinPage.style.top = (window.maps.openPinPage.offsetTop - shift.y) + `px`;
       }
-      if (`${locationAddress.x}` < 1134 && `${locationAddress.x}` > -65) {
+      if (locationAddress.x < 1134 && locationAddress.x > -65) {
         window.maps.openPinPage.style.left = (window.maps.openPinPage.offsetLeft - shift.x) + `px`;
       }
     };
