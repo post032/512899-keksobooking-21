@@ -58,11 +58,25 @@
     window.pinCard.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   };
 
+
+  let errorHandler = function (errorMessage) {
+    let node = document.createElement(`div`);
+    node.style = `padding: 20px; transform: translateX(-50%); z-index: 100; margin: 0 auto; text-align: center; background-color: #ffffff; border: 3px solid red; border-radius: 10px;`;
+    node.style.position = `absolute`;
+    node.style.left = 50 + `%`;
+    node.style.top = 50 + `%`;
+    node.style.fontSize = `30px`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
   window.pinCard = {
     markElement,
     renderCard,
     onSuccess,
     pinsElements,
-    pins
+    pins,
+    errorHandler
   };
 })();

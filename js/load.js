@@ -18,10 +18,10 @@
       }
     });
     xhr.addEventListener(`error`, function () {
-      onError(`Произошла ошибка соединения`);
+      onError(`Произошла ошибка соединения, повторите поптку`);
     });
     xhr.addEventListener(`timeout`, function () {
-      onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
+      onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс, перезагрузите страницу`);
     });
 
     xhr.timeout = TIMEOUT_IN_MS;

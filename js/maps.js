@@ -17,7 +17,7 @@
     for (let fieldsetElement of fieldsetElements) {
       fieldsetElement.removeAttribute(`disabled`);
     }
-    window.load(window.pinCard.onSuccess, function () {});
+    window.load(window.pinCard.onSuccess, window.pinCard.errorHandler);
   };
 
   openPinPage.addEventListener(`mousedown`, function (e) {
