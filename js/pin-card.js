@@ -3,6 +3,8 @@
 (function () {
   let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   let cardElementTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
+  let successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+  let errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
   let markElement = document.querySelector(`.map__pins`);
 
   let renderMark = function (newAd) {
@@ -46,6 +48,17 @@
     cardElementItem.querySelector(`.popup__avatar`).src = newAd.author.avatar;
     return cardElementItem;
   };
+
+  let renderSuccess = function () {
+    let successElement = successTemplate.cloneNode(true);
+    return successElement;
+  };
+
+  let renderError = function () {
+    let errorElement = errorTemplate.cloneNode(true);
+    return errorElement;
+  };
+
   let pins = [];
   let pinsElements = [];
   let onSuccess = function (pinsElem) {
@@ -83,7 +96,36 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
+  let onCloseError = function () {
+    let error = window.main.MAIN.querySelector(`.error`);
+    error.remove();
+  };
+
+  let onCloseSuccess = function () {
+    let success = window.main.MAIN.querySelector(`.success`);
+    success.remove();
+  };
+
+  let onEscPressError = function (e) {
+    if (e.key === `Escape`) {
+      e.preventDefault();
+      onCloseError();
+      document.removeEventListener(`keydown`, onEscPressError);
+    }
+  };
+
+  let onEscPressSuccess = function (e) {
+    if (e.key === `Escape`) {
+      e.preventDefault();
+      onCloseSuccess();
+      document.removeEventListener(`keydown`, onEscPressSuccess);
+    }
+  };
+
+
   window.maps.adForm.addEventListener(`submit`, function (evt) {
+    window.form.getValidationRooms();
+    window.form.roomNumber.reportValidity();
     window.form.address.removeAttribute(`disabled`);
     if (window.maps.adForm.checkValidity()) {
       window.upload(new FormData(window.maps.adForm), function () {
@@ -97,6 +139,15 @@
         }
         onReset();
       });
+      window.main.MAIN.appendChild(renderSuccess());
+      document.addEventListener(`keydown`, onEscPressSuccess);
+      document.addEventListener(`click`, onCloseSuccess);
+    } else {
+      window.main.MAIN.appendChild(renderError());
+      document.addEventListener(`keydown`, onEscPressError);
+      let buttonErrorClose = window.main.MAIN.querySelector(`.error__button`);
+      buttonErrorClose.addEventListener(`click`, onCloseError);
+      document.addEventListener(`click`, onCloseError);
     }
     evt.preventDefault();
   });
@@ -107,6 +158,7 @@
     onSuccess,
     pinsElements,
     pins,
-    onError
+    onError,
+    renderSuccess,
   };
 })();
