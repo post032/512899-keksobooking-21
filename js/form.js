@@ -114,5 +114,12 @@
 
   window.form = {
     address,
+    roomNumber,
+    capacity,
+    getValidationRooms,
+    locationStart,
+    getMinValuePrice,
+    price,
+    titleAdd
   };
 })();

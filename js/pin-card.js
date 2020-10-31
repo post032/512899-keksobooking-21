@@ -58,8 +58,20 @@
     window.pinCard.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   };
 
+  let onReset = function () {
+    window.maps.adForm.reset();
+    window.form.address.value = `${window.form.locationStart.x}, ${window.form.locationStart.y}`;
+    window.maps.openPinPage.style.left = window.form.locationStart.x + `px`;
+    window.maps.openPinPage.style.top = window.form.locationStart.y + `px`;
+  };
 
-  let errorHandler = function (errorMessage) {
+  let resetButton = window.maps.adForm.querySelector(`.ad-form__reset`);
+  resetButton.addEventListener(`click`, function (e) {
+    e.preventDefault();
+    onReset();
+  });
+
+  let onError = function (errorMessage) {
     let node = document.createElement(`div`);
     node.style = `padding: 20px; transform: translateX(-50%); z-index: 100; margin: 0 auto; text-align: center; background-color: #ffffff; border: 3px solid red; border-radius: 10px;`;
     node.style.position = `absolute`;
@@ -71,12 +83,30 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
+  window.maps.adForm.addEventListener(`submit`, function (evt) {
+    window.form.address.removeAttribute(`disabled`);
+    if (window.maps.adForm.checkValidity()) {
+      window.upload(new FormData(window.maps.adForm), function () {
+        window.maps.adForm.classList.add(`ad-form--disabled`);
+        window.maps.map.classList.add(`map--faded`);
+        for (let fieldsetElement of window.maps.fieldsetElements) {
+          fieldsetElement.setAttribute(`disabled`, true);
+        }
+        for (let pin of window.pinCard.pins) {
+          pin.remove();
+        }
+        onReset();
+      });
+    }
+    evt.preventDefault();
+  });
+
   window.pinCard = {
     markElement,
     renderCard,
     onSuccess,
     pinsElements,
     pins,
-    errorHandler
+    onError
   };
 })();
