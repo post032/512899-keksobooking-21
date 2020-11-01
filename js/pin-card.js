@@ -120,6 +120,8 @@
   let onCloseSuccess = function () {
     let success = window.main.MAIN.querySelector(`.success`);
     success.remove();
+    document.removeEventListener(`keydown`, onCloseSuccess);
+    document.removeEventListener(`click`, onCloseSuccess);
   };
 
   let onEscPressError = function (e) {
