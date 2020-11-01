@@ -71,6 +71,15 @@
     window.pinCard.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   };
 
+  let onPopupEscPressCard = function (e) {
+    let card = window.main.MAIN.querySelector(`.map__card`);
+    if (e.key === `Escape`) {
+      e.preventDefault();
+      card.remove();
+      document.removeEventListener(`keydown`, onPopupEscPressCard);
+    }
+  };
+
   let onReset = function () {
     window.maps.adForm.reset();
     window.form.address.value = `${window.form.locationStart.x}, ${window.form.locationStart.y}`;
@@ -129,6 +138,29 @@
     }
   };
 
+  let onFinish = function () {
+    window.maps.adForm.classList.add(`ad-form--disabled`);
+    window.maps.map.classList.add(`map--faded`);
+    for (let fieldsetElement of window.maps.fieldsetElements) {
+      fieldsetElement.setAttribute(`disabled`, true);
+    }
+    for (let pin of window.pinCard.pins) {
+      pin.remove();
+    }
+    if (window.main.MAIN.querySelector(`.map__card`)) {
+      window.main.MAIN.querySelector(`.map__card`).remove();
+      document.removeEventListener(`keydown`, onPopupEscPressCard);
+    }
+    window.main.MAIN.appendChild(renderSuccess());
+    document.addEventListener(`keydown`, onEscPressSuccess);
+    document.addEventListener(`click`, onCloseSuccess);
+  };
+
+  let onFormSubmit = function () {
+    onFinish();
+    onReset();
+  };
+
   window.pinCard = {
     markElement,
     renderCard,
@@ -138,7 +170,8 @@
     onError,
     renderSuccess,
     onErrorUpload,
-    onReset,
-    onEscPressSuccess
+    onEscPressSuccess,
+    onFormSubmit,
+    onPopupEscPressCard
   };
 })();
