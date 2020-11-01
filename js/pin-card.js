@@ -91,10 +91,16 @@
     node.style.left = 50 + `%`;
     node.style.top = 50 + `%`;
     node.style.fontSize = `30px`;
-
-
     node.textContent = errorMessage;
     document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
+  let onErrorUpload = function () {
+    window.main.MAIN.appendChild(renderError());
+    document.addEventListener(`keydown`, onEscPressError);
+    let buttonErrorClose = window.main.MAIN.querySelector(`.error__button`);
+    buttonErrorClose.addEventListener(`click`, onCloseError);
+    document.addEventListener(`click`, onCloseError);
   };
 
   let onCloseError = function () {
@@ -123,36 +129,6 @@
     }
   };
 
-
-  window.maps.adForm.addEventListener(`submit`, function (evt) {
-    window.form.getValidationRooms();
-    window.form.roomNumber.reportValidity();
-    window.form.address.removeAttribute(`disabled`);
-    if (window.maps.adForm.checkValidity()) {
-      window.upload(new FormData(window.maps.adForm), function () {
-        window.maps.adForm.classList.add(`ad-form--disabled`);
-        window.maps.map.classList.add(`map--faded`);
-        for (let fieldsetElement of window.maps.fieldsetElements) {
-          fieldsetElement.setAttribute(`disabled`, true);
-        }
-        for (let pin of window.pinCard.pins) {
-          pin.remove();
-        }
-        onReset();
-      });
-      window.main.MAIN.appendChild(renderSuccess());
-      document.addEventListener(`keydown`, onEscPressSuccess);
-      document.addEventListener(`click`, onCloseSuccess);
-    } else {
-      window.main.MAIN.appendChild(renderError());
-      document.addEventListener(`keydown`, onEscPressError);
-      let buttonErrorClose = window.main.MAIN.querySelector(`.error__button`);
-      buttonErrorClose.addEventListener(`click`, onCloseError);
-      document.addEventListener(`click`, onCloseError);
-    }
-    evt.preventDefault();
-  });
-
   window.pinCard = {
     markElement,
     renderCard,
@@ -161,5 +137,8 @@
     pins,
     onError,
     renderSuccess,
+    onErrorUpload,
+    onReset,
+    onEscPressSuccess
   };
 })();

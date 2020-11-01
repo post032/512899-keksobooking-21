@@ -112,6 +112,29 @@
     price.reportValidity();
   });
 
+  window.maps.adForm.addEventListener(`submit`, function (evt) {
+    window.form.getValidationRooms();
+    window.form.roomNumber.reportValidity();
+    window.form.address.removeAttribute(`disabled`);
+    if (window.maps.adForm.checkValidity()) {
+      window.backend.upload(new FormData(window.maps.adForm), function () {
+        window.maps.adForm.classList.add(`ad-form--disabled`);
+        window.maps.map.classList.add(`map--faded`);
+        for (let fieldsetElement of window.maps.fieldsetElements) {
+          fieldsetElement.setAttribute(`disabled`, true);
+        }
+        for (let pin of window.pinCard.pins) {
+          pin.remove();
+        }
+        window.pinCard.onReset();
+      });
+      window.main.MAIN.appendChild(window.pinCard.renderSuccess());
+      document.addEventListener(`keydown`, window.pinCard.onEscPressSuccess);
+      document.addEventListener(`click`, window.pinCard.onCloseSuccess);
+    }
+    evt.preventDefault();
+  });
+
   window.form = {
     address,
     roomNumber,
