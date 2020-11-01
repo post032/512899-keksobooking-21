@@ -17,7 +17,7 @@
     for (let fieldsetElement of fieldsetElements) {
       fieldsetElement.removeAttribute(`disabled`);
     }
-    window.load(window.pinCard.onSuccess, window.pinCard.errorHandler);
+    window.load(window.pinCard.onSuccess, window.pinCard.onError);
   };
 
   openPinPage.addEventListener(`mousedown`, function (e) {
@@ -35,6 +35,7 @@
   window.maps = {
     openPinPage,
     map,
-    adForm
+    adForm,
+    fieldsetElements
   };
 })();

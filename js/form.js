@@ -112,7 +112,24 @@
     price.reportValidity();
   });
 
+  window.maps.adForm.addEventListener(`submit`, function (evt) {
+    window.form.getValidationRooms();
+    window.form.roomNumber.reportValidity();
+    window.form.address.removeAttribute(`disabled`);
+    if (window.maps.adForm.checkValidity()) {
+      window.backend.upload(new FormData(window.maps.adForm), window.pinCard.onFormSubmit, window.pinCard.onErrorUpload);
+    }
+    evt.preventDefault();
+  });
+
   window.form = {
     address,
+    roomNumber,
+    capacity,
+    getValidationRooms,
+    locationStart,
+    getMinValuePrice,
+    price,
+    titleAdd
   };
 })();
