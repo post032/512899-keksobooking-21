@@ -9,13 +9,13 @@
   let typeValue = `any`;
 
   let updateType = function () {
-    let Types = pinsAll.filter(function (pin) {
+    let types = pinsAll.filter(function (pin) {
       if (typeValue === `any`) {
         return true;
       }
       return pin.offer.type === typeValue;
     });
-    window.render(Types);
+    window.render(types);
   };
 
   let pinRemove = function () {
