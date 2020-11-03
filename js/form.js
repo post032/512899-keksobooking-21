@@ -117,7 +117,7 @@
     window.form.roomNumber.reportValidity();
     window.form.address.removeAttribute(`disabled`);
     if (window.maps.adForm.checkValidity()) {
-      window.backend.upload(new FormData(window.maps.adForm), window.pinCard.onFormSubmit, window.pinCard.onErrorUpload);
+      window.backend.upload(new FormData(window.maps.adForm), window.condition.onFormSubmit, window.condition.onErrorUpload);
     }
     evt.preventDefault();
   });
