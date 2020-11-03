@@ -7,7 +7,7 @@
       return;
     }
     let card = window.main.MAIN.querySelector(`.map__card`);
-    let item = window.condition.pins.indexOf(evt.target.closest(`.map__pin`));
+    let item = window.condition.pins.indexOf(evt.target.closest(`.map__pin:not(.map__pin--main)`));
 
     if (card) {
       card.remove();

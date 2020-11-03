@@ -2,15 +2,10 @@
 
 (function () {
   let markElement = document.querySelector(`.map__pins`);
-  let MAX_PINS_COUNT = 5;
-
   window.render = function (pinsElem) {
-    let takeNumber = pinsElem.length > MAX_PINS_COUNT
-      ? MAX_PINS_COUNT
-      : pinsElem.length;
     let fragment = document.createDocumentFragment();
-    for (let i = 0; i < takeNumber; i++) {
-      fragment.appendChild(window.pinCard.renderMark(pinsElem[i]));
+    for (let pin of pinsElem.slice(0, 5)) {
+      fragment.appendChild(window.pinCard.renderMark(pin));
     }
     window.condition.pinsElements = Array.from(pinsElem);
     markElement.appendChild(fragment);

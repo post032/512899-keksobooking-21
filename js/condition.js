@@ -6,16 +6,16 @@
 
   let housingType = window.main.MAIN.querySelector(`#housing-type`);
   let pinsAll = [];
-  let typeValue;
+  let typeValue = `any`;
 
   let updateType = function () {
-    let sameType = pinsAll.filter(function (pin) {
-      if (!window.condition.typeValue) {
+    let Types = pinsAll.filter(function (pin) {
+      if (typeValue === `any`) {
         return true;
       }
-      return pin.offer.type === window.condition.typeValue;
+      return pin.offer.type === typeValue;
     });
-    window.render(sameType);
+    window.render(Types);
   };
 
   let pinRemove = function () {
@@ -29,13 +29,14 @@
   };
 
   housingType.addEventListener(`change`, function (evt) {
-    window.condition.typeValue = evt.target.value;
+    typeValue = evt.target.value;
     pinRemove();
     updateType();
   });
 
   let onSuccess = function (data) {
     pinsAll = data;
+    pinRemove();
     updateType();
   };
 
@@ -48,7 +49,7 @@
     }
   };
 
-  let onReset = function () {
+  let resetMap = function () {
     window.maps.adForm.reset();
     window.form.address.value = `${window.form.locationStart.x}, ${window.form.locationStart.y}`;
     window.maps.openPinPage.style.left = window.form.locationStart.x + `px`;
@@ -58,7 +59,7 @@
   let resetButton = window.maps.adForm.querySelector(`.ad-form__reset`);
   resetButton.addEventListener(`click`, function (e) {
     e.preventDefault();
-    onReset();
+    resetMap();
   });
 
   let onError = function (errorMessage) {
@@ -114,7 +115,7 @@
     }
   };
 
-  let onFinish = function () {
+  let resetPage = function () {
     window.maps.adForm.classList.add(`ad-form--disabled`);
     window.maps.map.classList.add(`map--faded`);
     for (let fieldsetElement of window.maps.fieldsetElements) {
@@ -127,8 +128,8 @@
   };
 
   let onFormSubmit = function () {
-    onFinish();
-    onReset();
+    resetPage();
+    resetMap();
   };
 
   window.condition = {
