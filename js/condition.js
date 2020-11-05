@@ -108,8 +108,6 @@
   window.condition = {
     pins,
     pinsElements,
-    // pinsAll,
-    // onSuccess,
     onError,
     onErrorUpload,
     onEscPressSuccess,
