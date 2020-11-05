@@ -3,21 +3,6 @@
 (function () {
   let pins = [];
   let pinsElements = [];
-
-  let housingType = window.main.MAIN.querySelector(`#housing-type`);
-  let pinsAll = [];
-  let typeValue = `any`;
-
-  let updateType = function () {
-    let types = pinsAll.filter(function (pin) {
-      if (typeValue === `any`) {
-        return true;
-      }
-      return pin.offer.type === typeValue;
-    });
-    window.render(types);
-  };
-
   let pinRemove = function () {
     for (let pin of window.condition.pins) {
       pin.remove();
@@ -26,18 +11,6 @@
       window.main.MAIN.querySelector(`.map__card`).remove();
       document.removeEventListener(`keydown`, onPopupEscPressCard);
     }
-  };
-
-  housingType.addEventListener(`change`, function (evt) {
-    typeValue = evt.target.value;
-    pinRemove();
-    updateType();
-  });
-
-  let onSuccess = function (data) {
-    pinsAll = data;
-    pinRemove();
-    updateType();
   };
 
   let onPopupEscPressCard = function (e) {
@@ -135,13 +108,11 @@
   window.condition = {
     pins,
     pinsElements,
-    pinsAll,
-    onSuccess,
     onError,
     onErrorUpload,
     onEscPressSuccess,
     onFormSubmit,
     onPopupEscPressCard,
-    typeValue,
+    pinRemove
   };
 })();
