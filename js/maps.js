@@ -11,7 +11,9 @@
   }
 
   let openPinPage = document.querySelector(`.map__pin--main`);
+  let active = false;
   let openPage = function () {
+    active = true;
     map.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
     for (let fieldsetElement of fieldsetElements) {
@@ -21,15 +23,19 @@
   };
 
   openPinPage.addEventListener(`mousedown`, function (e) {
-    if (e.button === 0) {
-      openPage();
+    if (active === false) {
+      if (e.button === 0) {
+        openPage();
+      }
     }
   });
 
   openPinPage.addEventListener(`keydown`, function (evt) {
-    if (evt.key === `Enter`) {
-      evt.preventDefault();
-      openPage();
+    if (active === false) {
+      if (evt.key === `Enter`) {
+        evt.preventDefault();
+        openPage();
+      }
     }
   });
   window.maps = {
