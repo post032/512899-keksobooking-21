@@ -32,6 +32,7 @@
   let resetButton = window.maps.adForm.querySelector(`.ad-form__reset`);
   resetButton.addEventListener(`click`, function (e) {
     e.preventDefault();
+    resetPage();
     resetMap();
   });
 
@@ -98,6 +99,8 @@
     window.main.MAIN.appendChild(window.pinCard.renderSuccess());
     document.addEventListener(`keydown`, onEscPressSuccess);
     document.addEventListener(`click`, onCloseSuccess);
+    window.maps.active = false;
+    window.maps.openPinPage.removeEventListener(`mousedown`, window.maps.openPage);
   };
 
   let onFormSubmit = function () {

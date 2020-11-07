@@ -33,7 +33,7 @@
     xhr.send(data);
   };
 
-  window.load = function (onSuccess, onError) {
+  let load = function (onSuccess, onError) {
     createXhr(onSuccess, onError, `GET`, LOAD_URL);
   };
 
@@ -42,6 +42,7 @@
   };
 
   window.backend = {
-    upload
+    upload,
+    load
   };
 })();

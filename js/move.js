@@ -51,11 +51,11 @@
           window.maps.openPinPage.removeEventListener(`click`, onClickPreventDefault);
         };
         window.maps.openPinPage.addEventListener(`click`, onClickPreventDefault);
+        dragged = false;
       }
     };
 
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
   });
-
 })();
