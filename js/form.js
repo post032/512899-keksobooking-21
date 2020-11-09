@@ -2,8 +2,8 @@
 
 (function () {
   let locationStart = {
-    x: window.maps.openPinPage.style.left = 570 - 32,
-    y: window.maps.openPinPage.style.top = 375 - 65,
+    x: window.maps.openPinPage.style.left = Math.round(parseInt(window.maps.openPinPage.style.left, 10) + window.maps.openPinPage.offsetWidth / 2),
+    y: window.maps.openPinPage.style.top = parseInt(window.maps.openPinPage.style.top, 10) + window.maps.openPinPage.offsetHeight,
   };
 
   let address = document.querySelector(`#address`);
@@ -119,6 +119,7 @@
     if (window.maps.adForm.checkValidity()) {
       window.backend.upload(new FormData(window.maps.adForm), window.condition.onFormSubmit, window.condition.onErrorUpload);
     }
+    window.form.address.setAttribute(`disabled`, true);
     evt.preventDefault();
   });
 

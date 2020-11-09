@@ -7,7 +7,7 @@
   };
   const TIMEOUT_IN_MS = 10000;
   const LOAD_URL = `https://21.javascript.pages.academy/keksobooking/data`;
-  const UPLOAD_URL = `https://21.javascript.pages.academy/keksobooking`;
+  const UPLOAD_URL = `https://21.javascript.pages.academy/keksobooking1`;
 
   let createXhr = function (onSuccess, onError, method, url, data) {
     let xhr = new XMLHttpRequest();

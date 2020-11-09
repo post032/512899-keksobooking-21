@@ -8,8 +8,8 @@
 
   let renderMark = function (newAd) {
     let markElementItem = markElementTemplate.cloneNode(true);
-    markElementItem.style.left = newAd.location.x + 25 + `px`;
-    markElementItem.style.top = newAd.location.y + 70 + `px`;
+    markElementItem.style.left = newAd.location.x - 25 + `px`;
+    markElementItem.style.top = newAd.location.y - 70 + `px`;
     let avatarImg = markElementItem.querySelector(`img`);
     avatarImg.src = newAd.author.avatar;
     avatarImg.alt = `фото пользователя`;
