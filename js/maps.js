@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  let adForm = window.main.MAIN.querySelector(`.ad-form`);
-  let map = window.main.MAIN.querySelector(`.map`);
+  let adForm = window.main.CONTEINER.querySelector(`.ad-form`);
+  let map = window.main.CONTEINER.querySelector(`.map`);
 
-  let fieldsetElements = window.main.MAIN.querySelectorAll(`fieldset`);
+  let fieldsetElements = window.main.CONTEINER.querySelectorAll(`fieldset`);
 
   for (let fieldsetElement of fieldsetElements) {
     fieldsetElement.setAttribute(`disabled`, true);

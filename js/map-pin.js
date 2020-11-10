@@ -9,6 +9,6 @@
     }
     window.condition.pinsElements = Array.from(pinsElem);
     markElement.appendChild(fragment);
-    window.condition.pins = Array.from(window.main.MAIN.querySelectorAll(`.map__pin:not(.map__pin--main)`));
+    window.condition.pins = Array.from(window.main.CONTEINER.querySelectorAll(`.map__pin:not(.map__pin--main)`));
   };
 })();

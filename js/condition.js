@@ -3,21 +3,21 @@
 (function () {
   let pins = [];
   let pinsElements = [];
-  let mapFiltersSelect = window.main.MAIN.querySelectorAll(`.map__filters select`);
-  let housingFeatures = window.main.MAIN.querySelector(`#housing-features`);
+  let mapFiltersSelect = window.main.CONTEINER.querySelectorAll(`.map__filters select`);
+  let housingFeatures = window.main.CONTEINER.querySelector(`#housing-features`);
 
   let pinRemove = function () {
     for (let pin of window.condition.pins) {
       pin.remove();
     }
-    if (window.main.MAIN.querySelector(`.map__card`)) {
-      window.main.MAIN.querySelector(`.map__card`).remove();
+    if (window.main.CONTEINER.querySelector(`.map__card`)) {
+      window.main.CONTEINER.querySelector(`.map__card`).remove();
       document.removeEventListener(`keydown`, onPopupEscPressCard);
     }
   };
 
   let onPopupEscPressCard = function (e) {
-    let card = window.main.MAIN.querySelector(`.map__card`);
+    let card = window.main.CONTEINER.querySelector(`.map__card`);
     if (e.key === `Escape`) {
       e.preventDefault();
       card.remove();
@@ -67,21 +67,21 @@
   };
 
   let onErrorUpload = function () {
-    window.main.MAIN.appendChild(window.pinCard.renderError());
+    window.main.CONTEINER.appendChild(window.pinCard.renderError());
     document.addEventListener(`keydown`, onEscPressError);
-    let buttonErrorClose = window.main.MAIN.querySelector(`.error__button`);
+    let buttonErrorClose = window.main.CONTEINER.querySelector(`.error__button`);
     buttonErrorClose.addEventListener(`click`, onCloseError);
     document.addEventListener(`click`, onCloseError);
   };
 
   let onCloseError = function () {
-    let error = window.main.MAIN.querySelector(`.error`);
+    let error = window.main.CONTEINER.querySelector(`.error`);
     error.remove();
     document.removeEventListener(`click`, onCloseError);
   };
 
   let onCloseSuccess = function () {
-    let success = window.main.MAIN.querySelector(`.success`);
+    let success = window.main.CONTEINER.querySelector(`.success`);
     success.remove();
     document.removeEventListener(`keydown`, onCloseSuccess);
     document.removeEventListener(`click`, onCloseSuccess);
@@ -113,7 +113,7 @@
     }
     resetFilters();
     pinRemove();
-    window.main.MAIN.appendChild(window.pinCard.renderSuccess());
+    window.main.CONTEINER.appendChild(window.pinCard.renderSuccess());
     document.addEventListener(`keydown`, onEscPressSuccess);
     document.addEventListener(`click`, onCloseSuccess);
   };
