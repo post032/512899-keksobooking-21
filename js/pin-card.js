@@ -1,12 +1,12 @@
 'use strict';
 
-(function () {
+(() => {
   let markElementTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   let cardElementTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   let successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
   let errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
 
-  let renderMark = function (newAd) {
+  let renderMark = (newAd) => {
     let markElementItem = markElementTemplate.cloneNode(true);
     markElementItem.style.left = newAd.location.x - window.main.BUTTON_WIDTH_SIZE_PIN + `px`;
     markElementItem.style.top = newAd.location.y - window.main.BUTTON_HEIGHT_SIZE_PIN + `px`;
@@ -16,7 +16,7 @@
     return markElementItem;
   };
 
-  let renderCard = function (newAd) {
+  let renderCard = (newAd) => {
     let cardElementItem = cardElementTemplate.cloneNode(true);
     cardElementItem.querySelector(`.popup__title`).textContent = newAd.offer.title;
     cardElementItem.querySelector(`.popup__text--address`).textContent = newAd.offer.address;
@@ -39,21 +39,22 @@
     let blockImg = cardElementItem.querySelector(`.popup__photos`);
     let image = blockImg.querySelector(`img`);
     image.remove();
-    for (let i = 0; i < newAd.offer.photos.length; i++) {
+
+    newAd.offer.photos.forEach((item, index) => {
       let cloneImg = image.cloneNode(true);
-      cloneImg.src = newAd.offer.photos[i];
+      cloneImg.src = newAd.offer.photos[index];
       blockImg.appendChild(cloneImg);
-    }
+    });
     cardElementItem.querySelector(`.popup__avatar`).src = newAd.author.avatar;
     return cardElementItem;
   };
 
-  let renderSuccess = function () {
+  let renderSuccess = () => {
     let successElement = successTemplate.cloneNode(true);
     return successElement;
   };
 
-  let renderError = function () {
+  let renderError = () => {
     let errorElement = errorTemplate.cloneNode(true);
     return errorElement;
   };

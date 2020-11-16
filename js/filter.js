@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
   let pinsAll = [];
   let DEBOUNCE_INTERVAL = 500;
   let lastTimeout;
@@ -10,26 +10,26 @@
   let housingRooms = window.main.CONTEINER.querySelector(`#housing-rooms`);
   let housingGuests = window.main.CONTEINER.querySelector(`#housing-guests`);
   let housingFeatures = document.querySelector(`#housing-features`);
-  let onUpdateFilters = function () {
+  let onUpdateFilters = () => {
     window.condition.pinRemove();
-    let filteredPins = pinsAll.filter(function (item) {
+    let filteredPins = pinsAll.filter((item) => {
       return onTypesCorrect(item) && onPriceCorrect(item) && onRoomsCorrect(item) && onGuestsCorrect(item) && onFeaturesCorrect(item);
     });
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
 
-    lastTimeout = window.setTimeout(function () {
+    lastTimeout = window.setTimeout(() => {
       window.render(filteredPins);
     }, DEBOUNCE_INTERVAL);
   };
-  let onTypesCorrect = function (pin) {
+  let onTypesCorrect = (pin) => {
     if (housingType.value === `any`) {
       return true;
     }
     return pin.offer.type === housingType.value;
   };
-  let onPriceCorrect = function (pin) {
+  let onPriceCorrect = (pin) => {
     if (housingPrice.value === `any`) {
       return true;
     } else if (housingPrice.value === `low`) {
@@ -42,29 +42,29 @@
     return false;
   };
 
-  let onRoomsCorrect = function (pin) {
+  let onRoomsCorrect = (pin) => {
     if (housingRooms.value === `any`) {
       return true;
     }
     return pin.offer.rooms === parseInt(housingRooms.value, 10);
   };
 
-  let onGuestsCorrect = function (pin) {
+  let onGuestsCorrect = (pin) => {
     if (housingGuests.value === `any`) {
       return true;
     }
     return pin.offer.guests === parseInt(housingGuests.value, 10);
   };
 
-  let onFeaturesCorrect = function (item) {
+  let onFeaturesCorrect = (item) => {
     let checkedFeatures = housingFeatures.querySelectorAll(`input:checked`);
-    return Array.from(checkedFeatures).every(function (element) {
+    return Array.from(checkedFeatures).every((element) => {
       return item.offer.features.includes(element.value);
     });
   };
 
   mapFilters.addEventListener(`change`, onUpdateFilters);
-  let onSuccess = function (data) {
+  let onSuccess = (data) => {
     pinsAll = data;
     onUpdateFilters();
   };

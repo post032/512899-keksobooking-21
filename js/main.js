@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
 
   const CHECKOUT_ARR = [`12:00`, `13:00`, `14:00`];
   const CHECKIN_ARR = [`12:00`, `13:00`, `14:00`];
