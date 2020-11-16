@@ -13,7 +13,7 @@
   const CONTEINER = document.querySelector(`main`);
   const WIDTH_SIZE_PIN = 32;
   const HEIGHT_SIZE_PIN = 75;
-  const BUTTON_WIDTH_SIZE_PIN = 32;
+  const BUTTON_WIDTH_SIZE_PIN = 25;
   const BUTTON_HEIGHT_SIZE_PIN = 65;
 
   window.main = {
