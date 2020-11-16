@@ -10,7 +10,7 @@
   let housingRooms = window.main.CONTEINER.querySelector(`#housing-rooms`);
   let housingGuests = window.main.CONTEINER.querySelector(`#housing-guests`);
   let housingFeatures = document.querySelector(`#housing-features`);
-  let updateFilters = function () {
+  let onUpdateFilters = function () {
     window.condition.pinRemove();
     let filteredPins = pinsAll.filter(function (item) {
       return onTypesCorrect(item) && onPriceCorrect(item) && onRoomsCorrect(item) && onGuestsCorrect(item) && onFeaturesCorrect(item);
@@ -63,14 +63,14 @@
     });
   };
 
-  mapFilters.addEventListener(`change`, updateFilters);
+  mapFilters.addEventListener(`change`, onUpdateFilters);
   let onSuccess = function (data) {
     pinsAll = data;
-    updateFilters();
+    onUpdateFilters();
   };
 
   window.filter = {
-    updateFilters,
+    onUpdateFilters,
     onSuccess
   };
 })();
