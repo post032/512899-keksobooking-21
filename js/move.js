@@ -1,6 +1,6 @@
 'use strict';
-(function () {
-  window.maps.openPinPage.addEventListener(`mousedown`, function (evt) {
+(() => {
+  window.maps.openPinPage.addEventListener(`mousedown`, (evt) => {
     evt.preventDefault();
 
     let startCoords = {
@@ -10,7 +10,7 @@
 
     let dragged = false;
 
-    let onMouseMove = function (moveEvt) {
+    let onMouseMove = (moveEvt) => {
       moveEvt.preventDefault();
 
       dragged = true;
@@ -39,14 +39,14 @@
       }
     };
 
-    let onMouseUp = function (upEvt) {
+    let onMouseUp = (upEvt) => {
       upEvt.preventDefault();
 
       document.removeEventListener(`mousemove`, onMouseMove);
       document.removeEventListener(`mouseup`, onMouseUp);
 
       if (dragged) {
-        let onClickPreventDefault = function (clickEvt) {
+        let onClickPreventDefault = (clickEvt) => {
           clickEvt.preventDefault();
           window.maps.openPinPage.removeEventListener(`click`, onClickPreventDefault);
         };

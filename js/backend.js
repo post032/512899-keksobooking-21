@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
 
   let StatusCode = {
     OK: 200
@@ -9,21 +9,21 @@
   const LOAD_URL = `https://21.javascript.pages.academy/keksobooking/data`;
   const UPLOAD_URL = `https://21.javascript.pages.academy/keksobooking`;
 
-  let createXhr = function (onSuccess, onError, method, url, data) {
+  let createXhr = (onSuccess, onError, method, url, data) => {
     let xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
-    xhr.addEventListener(`load`, function () {
+    xhr.addEventListener(`load`, () => {
       if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response);
       } else {
         onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
       }
     });
-    xhr.addEventListener(`error`, function () {
+    xhr.addEventListener(`error`, () => {
       onError(`Произошла ошибка соединения, повторите попытку`);
     });
-    xhr.addEventListener(`timeout`, function () {
+    xhr.addEventListener(`timeout`, () => {
       onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс, перезагрузите страницу`);
     });
 
@@ -33,11 +33,11 @@
     xhr.send(data);
   };
 
-  window.load = function (onSuccess, onError) {
+  window.load = (onSuccess, onError) => {
     createXhr(onSuccess, onError, `GET`, LOAD_URL);
   };
 
-  let upload = function (data, onSuccess, onErrorUpload) {
+  let upload = (data, onSuccess, onErrorUpload) => {
     createXhr(onSuccess, onErrorUpload, `POST`, UPLOAD_URL, data);
   };
 

@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
   let engToRuMap = {
     flat: `Квартира`,
     bungalow: `Бунгало`,

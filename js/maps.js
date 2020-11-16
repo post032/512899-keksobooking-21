@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(() => {
   let adForm = window.main.CONTEINER.querySelector(`.ad-form`);
   let map = window.main.CONTEINER.querySelector(`.map`);
 
@@ -13,7 +13,7 @@
   let openPinPage = document.querySelector(`.map__pin--main`);
   let active = false;
 
-  let openPage = function () {
+  let openPage = () => {
     window.maps.active = true;
     map.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
@@ -24,13 +24,13 @@
     window.condition.loadFilters();
   };
 
-  openPinPage.addEventListener(`mousedown`, function (e) {
+  openPinPage.addEventListener(`mousedown`, (e) => {
     if (window.maps.active === false && e.button === 0) {
       openPage();
     }
   });
 
-  openPinPage.addEventListener(`keydown`, function (evt) {
+  openPinPage.addEventListener(`keydown`, (evt) => {
     if (window.maps.active === false && evt.key === `Enter`) {
       evt.preventDefault();
       openPage();

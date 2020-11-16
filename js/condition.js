@@ -1,12 +1,12 @@
 'use strict';
 
-(function () {
+(() => {
   let pins = [];
   let pinsElements = [];
   let mapFiltersSelect = window.main.CONTEINER.querySelectorAll(`.map__filters select`);
   let housingFeatures = window.main.CONTEINER.querySelector(`#housing-features`);
 
-  let pinRemove = function () {
+  let pinRemove = () => {
     for (let pin of window.condition.pins) {
       pin.remove();
     }
@@ -16,7 +16,7 @@
     }
   };
 
-  let onPopupEscPressCard = function (e) {
+  let onPopupEscPressCard = (e) => {
     let card = window.main.CONTEINER.querySelector(`.map__card`);
     if (e.key === `Escape`) {
       e.preventDefault();
@@ -25,7 +25,7 @@
     }
   };
 
-  let resetMap = function () {
+  let resetMap = () => {
     window.maps.adForm.reset();
     window.form.address.value = `${window.form.locationStart.x}, ${window.form.locationStart.y}`;
     window.maps.openPinPage.style.left = window.form.locationStart.x + `px`;
@@ -33,13 +33,13 @@
   };
 
   let resetButton = window.maps.adForm.querySelector(`.ad-form__reset`);
-  resetButton.addEventListener(`click`, function (e) {
+  resetButton.addEventListener(`click`, (e) => {
     e.preventDefault();
     resetPage();
     resetMap();
   });
 
-  let resetFilters = function () {
+  let resetFilters = () => {
     for (let mapFilterSelect of mapFiltersSelect) {
       mapFilterSelect.setAttribute(`disabled`, true);
     }
@@ -47,14 +47,14 @@
   };
   resetFilters();
 
-  let loadFilters = function () {
+  let loadFilters = () => {
     for (let mapFilterSelect of mapFiltersSelect) {
       mapFilterSelect.removeAttribute(`disabled`);
     }
     housingFeatures.removeAttribute(`disabled`);
   };
 
-  let onError = function (errorMessage) {
+  let onError = (errorMessage) => {
     let node = document.createElement(`div`);
     node.style = `padding: 20px; transform: translateX(-50%); z-index: 100; margin: 0 auto; text-align: center; background-color: #ffffff; border: 3px solid red; border-radius: 10px;`;
     node.style.position = `absolute`;
@@ -66,7 +66,7 @@
     resetFilters();
   };
 
-  let onErrorUpload = function () {
+  let onErrorUpload = () => {
     window.main.CONTEINER.appendChild(window.pinCard.renderError());
     document.addEventListener(`keydown`, onEscPressError);
     let buttonErrorClose = window.main.CONTEINER.querySelector(`.error__button`);
@@ -74,20 +74,20 @@
     document.addEventListener(`click`, onCloseError);
   };
 
-  let onCloseError = function () {
+  let onCloseError = () => {
     let error = window.main.CONTEINER.querySelector(`.error`);
     error.remove();
     document.removeEventListener(`click`, onCloseError);
   };
 
-  let onCloseSuccess = function () {
+  let onCloseSuccess = () => {
     let success = window.main.CONTEINER.querySelector(`.success`);
     success.remove();
     document.removeEventListener(`keydown`, onCloseSuccess);
     document.removeEventListener(`click`, onCloseSuccess);
   };
 
-  let onEscPressError = function (e) {
+  let onEscPressError = (e) => {
     if (e.key === `Escape`) {
       e.preventDefault();
       onCloseError();
@@ -96,7 +96,7 @@
     }
   };
 
-  let onEscPressSuccess = function (e) {
+  let onEscPressSuccess = (e) => {
     if (e.key === `Escape`) {
       e.preventDefault();
       onCloseSuccess();
@@ -104,7 +104,7 @@
     }
   };
 
-  let resetPage = function () {
+  let resetPage = () => {
     window.maps.active = false;
     window.maps.adForm.classList.add(`ad-form--disabled`);
     window.maps.map.classList.add(`map--faded`);
@@ -118,7 +118,7 @@
     document.addEventListener(`click`, onCloseSuccess);
   };
 
-  let onFormSubmit = function () {
+  let onFormSubmit = () => {
     resetPage();
     resetMap();
   };

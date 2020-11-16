@@ -1,7 +1,7 @@
 'use strict';
-(function () {
+(() => {
   let mapPins = window.main.CONTEINER.querySelector(`.map__pins`);
-  let onMapPin = function (evt) {
+  let onMapPin = (evt) => {
     let pin = evt.target.closest(`.map__pin:not(.map__pin--main)`);
     if (!pin) {
       return;
@@ -15,12 +15,12 @@
     }
     window.maps.map.appendChild(window.pinCard.renderCard(window.condition.pinsElements[item]));
     let mapCard = window.main.CONTEINER.querySelector(`.map__card`);
-    let closePopup = function () {
+    let closePopup = () => {
       mapCard.remove();
     };
     let popupClose = window.main.CONTEINER.querySelector(`.popup__close`);
     document.addEventListener(`keydown`, window.condition.onPopupEscPressCard);
-    popupClose.addEventListener(`click`, function () {
+    popupClose.addEventListener(`click`, () => {
       closePopup();
       document.removeEventListener(`keydown`, window.condition.onPopupEscPressCard);
     });
