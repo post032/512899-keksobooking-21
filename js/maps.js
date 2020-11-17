@@ -1,46 +1,44 @@
 'use strict';
 
-(() => {
-  let adForm = window.main.CONTEINER.querySelector(`.ad-form`);
-  let map = window.main.CONTEINER.querySelector(`.map`);
+let adForm = window.main.CONTEINER.querySelector(`.ad-form`);
+let map = window.main.CONTEINER.querySelector(`.map`);
 
-  let fieldsetElements = window.main.CONTEINER.querySelectorAll(`fieldset`);
+let fieldsetElements = window.main.CONTEINER.querySelectorAll(`fieldset`);
 
+for (let fieldsetElement of fieldsetElements) {
+  fieldsetElement.setAttribute(`disabled`, true);
+}
+
+let openPinPage = document.querySelector(`.map__pin--main`);
+let active = false;
+
+let openPage = () => {
+  window.maps.active = true;
+  map.classList.remove(`map--faded`);
+  adForm.classList.remove(`ad-form--disabled`);
   for (let fieldsetElement of fieldsetElements) {
-    fieldsetElement.setAttribute(`disabled`, true);
+    fieldsetElement.removeAttribute(`disabled`);
   }
+  window.load(window.filter.onSuccess, window.condition.onError);
+  window.condition.loadFilters();
+};
 
-  let openPinPage = document.querySelector(`.map__pin--main`);
-  let active = false;
+openPinPage.addEventListener(`mousedown`, (e) => {
+  if (window.maps.active === false && e.button === 0) {
+    openPage();
+  }
+});
 
-  let openPage = () => {
-    window.maps.active = true;
-    map.classList.remove(`map--faded`);
-    adForm.classList.remove(`ad-form--disabled`);
-    for (let fieldsetElement of fieldsetElements) {
-      fieldsetElement.removeAttribute(`disabled`);
-    }
-    window.load(window.filter.onSuccess, window.condition.onError);
-    window.condition.loadFilters();
-  };
-
-  openPinPage.addEventListener(`mousedown`, (e) => {
-    if (window.maps.active === false && e.button === 0) {
-      openPage();
-    }
-  });
-
-  openPinPage.addEventListener(`keydown`, (evt) => {
-    if (window.maps.active === false && evt.key === `Enter`) {
-      evt.preventDefault();
-      openPage();
-    }
-  });
-  window.maps = {
-    active,
-    openPinPage,
-    map,
-    adForm,
-    fieldsetElements
-  };
-})();
+openPinPage.addEventListener(`keydown`, (evt) => {
+  if (window.maps.active === false && evt.key === `Enter`) {
+    evt.preventDefault();
+    openPage();
+  }
+});
+window.maps = {
+  active,
+  openPinPage,
+  map,
+  adForm,
+  fieldsetElements
+};
