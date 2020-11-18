@@ -44,6 +44,7 @@ let renderCard = (newAd) => {
     cloneImg.src = newAd.offer.photos[index];
     blockImg.appendChild(cloneImg);
   });
+
   cardElementItem.querySelector(`.popup__avatar`).src = newAd.author.avatar;
   return cardElementItem;
 };
