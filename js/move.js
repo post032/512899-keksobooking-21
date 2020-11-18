@@ -37,6 +37,9 @@ window.maps.openPinPage.addEventListener(`mousedown`, (evt) => {
     if (locationAddress.x < document.querySelector(`.map__overlay`).clientWidth + 1 && locationAddress.x > -32 && locationAddress.x > 0) {
       window.maps.openPinPage.style.left = (window.maps.openPinPage.offsetLeft - shift.x) + `px`;
     }
+    if (locationAddress.x < 0) {
+      window.maps.openPinPage.style.left = 0;
+    }
   };
 
   let onMouseUp = (upEvt) => {
