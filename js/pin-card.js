@@ -25,12 +25,13 @@ let renderCard = (newAd) => {
   cardElementItem.querySelector(`.popup__text--time`).textContent = `Заезд после ${newAd.offer.checkin}, выезд до ${newAd.offer.checkout}`;
   let popupFeaturesBlock = cardElementItem.querySelector(`.popup__features`);
   popupFeaturesBlock.innerHTML = ``;
-  for (let i = 0; i < newAd.offer.features.length; i++) {
+
+  newAd.offer.features.forEach((item, index) => {
     let popupFeatureElement = document.createElement(`li`);
-    popupFeatureElement.textContent = newAd.offer.features[i];
-    popupFeatureElement.classList.add(`popup__feature`, `popup__feature--${newAd.offer.features[i]}`);
+    popupFeatureElement.textContent = newAd.offer.features[index];
+    popupFeatureElement.classList.add(`popup__feature`, `popup__feature--${newAd.offer.features[index]}`);
     popupFeaturesBlock.append(popupFeatureElement);
-  }
+  });
   if (!popupFeaturesBlock.querySelector(`.popup__feature`)) {
     popupFeaturesBlock.style.display = `none`;
   }

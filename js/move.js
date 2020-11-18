@@ -34,8 +34,11 @@ window.maps.openPinPage.addEventListener(`mousedown`, (evt) => {
     if (locationAddress.y < 630 && locationAddress.y > 129) {
       window.maps.openPinPage.style.top = (window.maps.openPinPage.offsetTop - shift.y) + `px`;
     }
-    if (locationAddress.x < document.querySelector(`.map__overlay`).clientWidth + 1 && locationAddress.x > -32 && locationAddress.x > 0) {
+    if (locationAddress.x < document.querySelector(`.map__overlay`).clientWidth && locationAddress.x > 0) {
       window.maps.openPinPage.style.left = (window.maps.openPinPage.offsetLeft - shift.x) + `px`;
+    }
+    if (locationAddress.x < 0) {
+      window.maps.openPinPage.style.left = 0;
     }
   };
 
